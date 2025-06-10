@@ -3,8 +3,8 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 # import matplotlib.pyplot as plt
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.model_selection import train_test_split
+# from sklearn.ensemble import RandomForestRegressor
+# from sklearn.model_selection import train_test_split
 
 st.title("🌍 Climate Change Forecast - Tanzania (Africa Proxy) - Mr Abubakar")
 
@@ -26,17 +26,17 @@ def load_data():
 df = load_data()
 
 # Model Training
-features = df[['Year', 'Month']]
-target = df['Temperature']
-X_train, X_test, y_train, y_test = train_test_split(features, target, test_size=0.2, random_state=42)
-model = RandomForestRegressor(n_estimators=100)
-model.fit(X_train, y_train)
+# features = df[['Year', 'Month']]
+# target = df['Temperature']
+# X_train, X_test, y_train, y_test = train_test_split(features, target, test_size=0.2, random_state=42)
+# model = RandomForestRegressor(n_estimators=100)
+# model.fit(X_train, y_train)
 
 # User Input
 st.sitebar.header("User Input")
 year = st.slider('Select Year', 2025, 2035, 2025)
 month = st.slider('Select Month', 1, 12, 1)
-prediction = model.predict([[year, month]])[0]
+# prediction = model.predict([[year, month]])[0]
 
 st.subheader(f"Predicted Avg Temperature for {year}-{month:02d}: 🌡️ {prediction:.2f} °C")
 
