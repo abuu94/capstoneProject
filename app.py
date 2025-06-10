@@ -1,5 +1,4 @@
 # SECTION 7: Streamlit App Script
-streamlit_code = '''
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -34,6 +33,7 @@ model = RandomForestRegressor(n_estimators=100)
 model.fit(X_train, y_train)
 
 # User Input
+st.sitebar.header("User Input")
 year = st.slider('Select Year', 2025, 2035, 2025)
 month = st.slider('Select Month', 1, 12, 1)
 prediction = model.predict([[year, month]])[0]
@@ -43,12 +43,5 @@ st.subheader(f"Predicted Avg Temperature for {year}-{month:02d}: 🌡️ {predic
 # Plot historical data
 if st.checkbox("Show Historical Data"):
     st.line_chart(df.groupby('Year')['Temperature'].mean())
-'''
 
-    # Save to file
-    with open("climate_app.py", "w") as f:
-        f.write(streamlit_code)
-
-    print("✅ Streamlit app script saved as 'app.py'")
-else:
-    print("Error: Required columns ('Year', 'Mean') not found in the dataset.")
+  
