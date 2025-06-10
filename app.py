@@ -6,7 +6,7 @@ from sklearn.model_selection import train_test_split
 st.set_page_config(page_title="Tanzania Climate Analysis", layout="wide")
 st.title(" Climate Change Analysis - Tanzania")
 
-@st.cache_data
+# @st.cache_data
 # def load_data():
 #     # url = "https://raw.githubusercontent.com/ErumAfzal/Climate-Project-in-Tanzania/main/chart.csv"
 #     url = "https://raw.githubusercontent.com/abuu94/capstoneProject/refs/heads/main/tanzania_climate_data.csv"
