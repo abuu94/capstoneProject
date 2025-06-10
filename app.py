@@ -2,46 +2,44 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-# import matplotlib.pyplot as plt
-# from sklearn.ensemble import RandomForestRegressor
-# from sklearn.model_selection import train_test_split
+import matplotlib.pyplot as plt
+import seaborn as sns
 
-st.title("🌍 Climate Change Forecast - Tanzania (Africa Proxy) - Mr Abubakar")
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
+from statsmodels.tsa.seasonal import seasonal_decompose
 
-# Load historical data
-@st.cache_data # Use st.cache_data instead of st.cache
-def load_data():
-    url = 'https://raw.githubusercontent.com/datasets/global-temp/master/data/monthly.csv'
-    data = pd.read_csv(url)
-    # Removed filtering by Source
-    data['Date'] = pd.to_datetime(data['Year']) # Corrected column name to 'Year'
-    data.rename(columns={'Year': 'Date', 'Mean': 'Temperature'}, inplace=True) # Rename 'Year' to 'Date' and 'Mean' to 'Temperature'
-    data.dropna(inplace=True)
-    # Resample to monthly average to handle potential duplicate dates from different sources
-    data = data.set_index('Date').resample('MS').mean().reset_index()
-    data['Year'] = data['Date'].dt.year
-    data['Month'] = data['Date'].dt.month
-    return data[['Year', 'Month', 'Temperature']] # Ensure only these columns are returned
+st.set_page_config(layout="wide")
+st.title("🌍 Climate Change Forecast - Tanzania")
+st.markdown("This Interactive dashboard ")
 
-df = load_data()
+st.sidebar.header(" Controls : Years Navigation ")
+year_range=st.sidebar.slider("Select Year Range : ", 1980,2024,(1990,2024))
+forecast_years = st.sidebar.slider("Forecast Future Temp Until ",2025,2035,2030)
 
-# Model Training
-# features = df[['Year', 'Month']]
-# target = df['Temperature']
-# X_train, X_test, y_train, y_test = train_test_split(features, target, test_size=0.2, random_state=42)
-# model = RandomForestRegressor(n_estimators=100)
-# model.fit(X_train, y_train)
 
-# User Input
-st.sitebar.header("User Input")
-year = st.slider('Select Year', 2025, 2035, 2025)
-month = st.slider('Select Month', 1, 12, 1)
-# prediction = model.predict([[year, month]])[0]
+np.random.seed(42)
+years = np.range(1980,2025)
+temperature = 22 + 0.03 * (years - 1980) + np.random.normal(0,0.5,len(years))
+precipitation = 800 + 2 * (years - 1980) + np.random.normal(0,30,len(years))
 
-st.subheader(f"Predicted Avg Temperature for {year}-{month:02d}: 🌡️ {prediction:.2f} °C")
+df = pd.DataFrame({
+    'Year':years,
+    'Average_Temperature_C':temperature,
+    'Annual_Precipitation':precipitation
+})
 
-# Plot historical data
-if st.checkbox("Show Historical Data"):
-    st.line_chart(df.groupby('Year')['Temperature'].mean())
+df_filtered = df[( df['Year']>= year_range[0]) & (df['Year']<=year_range[1])]
 
-  
+st.subheader("1. Sample Climate Data")
+st.dataframe(df_filtered.head())
+
+df_filtered['Year'] = pd.to_dataframe(df_filtered['Year'],format='%Y')
+df_filtered.set_index('Year',inplace=True)
+
+
+st.subheader("2. Descriptive Statistics")
+st.write(df_filtered.describe())
+
