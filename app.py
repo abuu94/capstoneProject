@@ -36,34 +36,34 @@ st.title(" Climate Change Analysis - Tanzania")
 
 #     return df
 
-df = load_data()
+# df = load_data()
 
-if not df.empty:
-    # Sidebar Inputs
-    st.sidebar.header("User Input")
-    month = st.sidebar.slider('Select Month', 1, 12, 1)
-    year = 2025  # fixed dummy year
+# if not df.empty:
+#     # Sidebar Inputs
+#     st.sidebar.header("User Input")
+#     month = st.sidebar.slider('Select Month', 1, 12, 1)
+#     year = 2025  # fixed dummy year
 
-    # Train model
-    features = df[['Year', 'Month']]
-    target = df['Temperature']
+#     # Train model
+#     features = df[['Year', 'Month']]
+#     target = df['Temperature']
 
-    X_train, X_test, y_train, y_test = train_test_split(features, target, test_size=0.2, random_state=42)
+#     X_train, X_test, y_train, y_test = train_test_split(features, target, test_size=0.2, random_state=42)
 
-    model = RandomForestRegressor(n_estimators=100, random_state=42)
-    model.fit(X_train, y_train)
+#     model = RandomForestRegressor(n_estimators=100, random_state=42)
+#     model.fit(X_train, y_train)
 
-    prediction = model.predict([[year, month]])[0]
+#     prediction = model.predict([[year, month]])[0]
 
-    # Display result
-    st.subheader("📈 Forecasted Temperature")
-    st.write(f"Predicted Avg Temperature for *{year}-{month:02d}: 🌡 **{prediction:.2f} °C*")
+#     # Display result
+#     st.subheader("📈 Forecasted Temperature")
+#     st.write(f"Predicted Avg Temperature for *{year}-{month:02d}: 🌡 **{prediction:.2f} °C*")
 
- # Historical Trend Chart
-    if st.checkbox("📊 Show Temperature Trend by Month"):
-        st.line_chart(df[['Month', 'Temperature']].set_index('Month').sort_index())
-        # Footer
-        st.markdown("---")
-        st.caption("Data Source: [World Bank Climate Portal](https://github.com/ErumAfzal/Climate-Project-in-Tanzania)")
-else:
-    st.warning("No data available to display.")
+#  # Historical Trend Chart
+#     if st.checkbox("📊 Show Temperature Trend by Month"):
+#         st.line_chart(df[['Month', 'Temperature']].set_index('Month').sort_index())
+#         # Footer
+#         st.markdown("---")
+#         st.caption("Data Source: [World Bank Climate Portal](https://github.com/ErumAfzal/Climate-Project-in-Tanzania)")
+# else:
+#     st.warning("No data available to display.")
