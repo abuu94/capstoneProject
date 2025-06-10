@@ -7,34 +7,34 @@ st.set_page_config(page_title="Tanzania Climate Analysis", layout="wide")
 st.title(" Climate Change Analysis - Tanzania")
 
 @st.cache_data
-def load_data():
-    # url = "https://raw.githubusercontent.com/ErumAfzal/Climate-Project-in-Tanzania/main/chart.csv"
-    url = "https://raw.githubusercontent.com/abuu94/capstoneProject/refs/heads/main/tanzania_climate_data.csv"
-    df = pd.read_csv(url)
+# def load_data():
+#     # url = "https://raw.githubusercontent.com/ErumAfzal/Climate-Project-in-Tanzania/main/chart.csv"
+#     url = "https://raw.githubusercontent.com/abuu94/capstoneProject/refs/heads/main/tanzania_climate_data.csv"
+#     df = pd.read_csv(url)
 
-    # Display column names for debugging
-    st.write("Available columns:", df.columns.tolist())
+#     # Display column names for debugging
+#     st.write("Available columns:", df.columns.tolist())
 
-    # Rename for clarity
-    df.rename(columns={
-        'Average Mean Surface Air Temperature': 'Temperature',
-        'Category': 'MonthName'
-    }, inplace=True)
+#     # Rename for clarity
+#     df.rename(columns={
+#         'Average Mean Surface Air Temperature': 'Temperature',
+#         'Category': 'MonthName'
+#     }, inplace=True)
 
-  # Convert MonthName to month number
-    month_map = {
-        'Jan': 1, 'Feb': 2, 'Mar': 3, 'Apr': 4,
-        'May': 5, 'Jun': 6, 'Jul': 7, 'Aug': 8,
-        'Sep': 9, 'Oct': 10, 'Nov': 11, 'Dec': 12
-    }
-    df['Month'] = df['MonthName'].map(month_map)
-    df['Year'] = 2025  # Assign a default or dummy year
+#   # Convert MonthName to month number
+#     month_map = {
+#         'Jan': 1, 'Feb': 2, 'Mar': 3, 'Apr': 4,
+#         'May': 5, 'Jun': 6, 'Jul': 7, 'Aug': 8,
+#         'Sep': 9, 'Oct': 10, 'Nov': 11, 'Dec': 12
+#     }
+#     df['Month'] = df['MonthName'].map(month_map)
+#     df['Year'] = 2025  # Assign a default or dummy year
 
-    # Ensure temperature is numeric
-    df['Temperature'] = pd.to_numeric(df['Temperature'], errors='coerce')
-    df.dropna(subset=['Temperature'], inplace=True)
+#     # Ensure temperature is numeric
+#     df['Temperature'] = pd.to_numeric(df['Temperature'], errors='coerce')
+#     df.dropna(subset=['Temperature'], inplace=True)
 
-    return df
+#     return df
 
 df = load_data()
 
@@ -65,5 +65,5 @@ if not df.empty:
         # Footer
         st.markdown("---")
         st.caption("Data Source: [World Bank Climate Portal](https://github.com/ErumAfzal/Climate-Project-in-Tanzania)")
-    else:
-        st.warning("No data available to display.")
+else:
+    st.warning("No data available to display.")
